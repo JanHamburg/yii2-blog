@@ -1,6 +1,7 @@
 <?php
 
 namespace funson86\blog;
+
 use Yii;
 
 class Module extends \yii\base\Module
@@ -16,8 +17,8 @@ class Module extends \yii\base\Module
         if ($this->getIsBackend() === true) {
             $this->setViewPath('@funson86/blog/views/backend');
         } elseif (isset(Yii::$app->params['blogTheme'])) {
-            $this->setViewPath('@frontend/themes/blog');
-            $this->setLayoutPath('@frontend/themes/blog/layouts');
+            $this->setViewPath('@frontend/views/blog');
+            $this->setLayoutPath('@frontend/views/layouts');
         } else {
             $this->setViewPath('@funson86/blog/views/frontend');
             $this->setLayoutPath('@funson86/blog/views/frontend/layouts');
