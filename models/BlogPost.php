@@ -129,11 +129,19 @@ class BlogPost extends \yii\db\ActiveRecord
         return $this->hasMany(BlogComment::className(), ['post_id' => 'id']);
     }
 
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
     public function getSimilarPosts()
     {
-        return $this->hasMany(BlogPost::className(), ['catalog_id' => $this->catalog_id])
-            ->where('id != :id', ['id' => $this->id])
-            ->limit(self::SIMILAR_LIMIT);
+        return self::find()
+            ->where(
+                'id != :id and catalog_id = :catalog_id',
+                ['id' => $this->id, 'catalog_id' => $this->catalog_id]
+            )
+            ->limit(self::SIMILAR_LIMIT)
+            ->orderBy('updated_at DESC')
+            ->all();
     }
 
     public function getStatus()
