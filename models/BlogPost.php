@@ -29,12 +29,14 @@ use yii\helpers\Html;
  *
  * @property BlogComment[] $blogComments
  * @property BlogCatalog $catalog
+ * @property BlogPost[] $similarPosts
  */
 class BlogPost extends \yii\db\ActiveRecord
 {
     private $_oldTags;
 
     private $_status;
+    const SIMILAR_LIMIT = 3;
 
     /**
      * @inheritdoc
@@ -127,6 +129,13 @@ class BlogPost extends \yii\db\ActiveRecord
         return $this->hasMany(BlogComment::className(), ['post_id' => 'id']);
     }
 
+    public function getSimilarPosts()
+    {
+        return $this->hasMany(BlogPost::className(), ['catalog_id' => $this->catalog_id])
+            ->where('id != :id', ['id' => $this->id])
+            ->limit(self::SIMILAR_LIMIT);
+    }
+
     public function getStatus()
     {
         if ($this->_status === null) {
@@ -192,7 +201,7 @@ class BlogPost extends \yii\db\ActiveRecord
     /**
      * Normalizes the user-entered tags.
      */
-    public function normalizeTags($attribute,$params)
+    public function normalizeTags($attribute, $params)
     {
         $this->tags = BlogTag::array2string(array_unique(array_map('trim', BlogTag::string2array($this->tags))));
     }
@@ -211,8 +220,8 @@ class BlogPost extends \yii\db\ActiveRecord
     public function getTagLinks()
     {
         $links = [];
-        foreach(BlogTag::string2array($this->tags) as $tag)
-            $links[] = Html::a($tag, Yii::$app->getUrlManager()->createUrl(['blog/default/index', 'tag'=>$tag]));
+        foreach (BlogTag::string2array($this->tags) as $tag)
+            $links[] = Html::a($tag, Yii::$app->getUrlManager()->createUrl(['blog/default/index', 'tag' => $tag]));
 
         return $links;
     }
