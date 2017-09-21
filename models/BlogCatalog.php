@@ -89,6 +89,7 @@ class BlogCatalog extends \yii\db\ActiveRecord
             'status' => Module::t('blog', 'Status'),
             'created_at' => Module::t('blog', 'Created At'),
             'updated_at' => Module::t('blog', 'Updated At'),
+            'with_likes' => Module::t('blog', 'With Likes'),
         ];
     }
 

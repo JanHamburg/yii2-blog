@@ -2,6 +2,7 @@
 
 namespace funson86\blog\controllers\frontend;
 
+use funson86\blog\models\BlogPostLike;
 use Yii;
 use yii\data\Pagination;
 use yii\web\Controller;
@@ -35,23 +36,19 @@ class DefaultController extends Controller
 
             //menu
             $id = isset($_GET['id']) ? $_GET['id'] : 0;
-            $rootId = ($id>0) ? BlogCatalog::getRootCatalogId($id, BlogCatalog::find()->all()) : 0;
+            $rootId = ($id > 0) ? BlogCatalog::getRootCatalogId($id, BlogCatalog::find()->all()) : 0;
             $allCatalog = BlogCatalog::findAll([
                 'parent_id' => 0
             ]);
-            foreach($allCatalog as $catalog)
-            {
-                $item = ['label'=>$catalog->title, 'active'=>($catalog->id == $rootId)];
-                if($catalog->redirect_url)
-                {// redirect to other site
+            foreach ($allCatalog as $catalog) {
+                $item = ['label' => $catalog->title, 'active' => ($catalog->id == $rootId)];
+                if ($catalog->redirect_url) {// redirect to other site
                     $item['url'] = $catalog->redirect_url;
-                }
-                else
-                {
-                    $item['url'] = Yii::$app->getUrlManager()->createUrl(['/blog/default/catalog/','id'=>$catalog->id, 'surname'=>$catalog->surname]);
+                } else {
+                    $item['url'] = Yii::$app->getUrlManager()->createUrl(['/blog/default/catalog/', 'id' => $catalog->id, 'surname' => $catalog->surname]);
                 }
 
-                if(!empty($item))
+                if (!empty($item))
                     array_push($this->mainMenu, $item);
             }
             Yii::$app->params['mainMenu'] = $this->mainMenu;
@@ -69,14 +66,13 @@ class DefaultController extends Controller
             'status' => Status::STATUS_ACTIVE,
         ]);
 
-        if(Yii::$app->request->get('tag'))
+        if (Yii::$app->request->get('tag'))
             $query->andFilterWhere([
                 'like', 'tags', Yii::$app->request->get('tag'),
             ]);
 
-        if(Yii::$app->request->get('keyword'))
-        {
-            $keyword = strtr(Yii::$app->request->get('keyword'), array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\'));
+        if (Yii::$app->request->get('keyword')) {
+            $keyword = strtr(Yii::$app->request->get('keyword'), array('%' => '\%', '_' => '\_', '\\' => '\\\\'));
             $keyword = Yii::$app->formatter->asText($keyword);
 
             $query->andFilterWhere([
@@ -102,24 +98,21 @@ class DefaultController extends Controller
 
     public function actionCatalog()
     {
-        if(Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0)
-        {
+        if (Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0) {
             $query = BlogPost::find();
             $query->where([
                 'status' => Status::STATUS_ACTIVE,
                 'catalog_id' => Yii::$app->request->get('id'),
             ]);
-        }
-        else
+        } else
             $this->redirect(['blog/index']);
 
-        if(Yii::$app->request->get('tag'))
+        if (Yii::$app->request->get('tag'))
             $query->andFilterWhere([
                 'tags' => Yii::$app->request->get('tag'),
             ]);
 
-        if(Yii::$app->request->get('keyword'))
-        {
+        if (Yii::$app->request->get('keyword')) {
             //$keyword = '%'.strtr(Yii::$app->request->get('keyword'), array('%'=>'\%', '_'=>'\_', '\\'=>'\\\\')).'%';
             $keyword = Yii::$app->request->get('keyword');
 
@@ -146,14 +139,13 @@ class DefaultController extends Controller
 
     public function actionView()
     {
-        if(Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0)
-        {
+        if (Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0) {
             $post = BlogPost::findOne(Yii::$app->request->get('id'));
             $post->updateCounters(['click' => 1]);
             $comments = BlogComment::find()->where(['post_id' => $post->id, 'status' => Status::STATUS_ACTIVE])->orderBy(['created_at' => SORT_ASC])->all();
             $comment = $this->newComment($post);
-        }
-        else
+            $liked = BlogPostLike::find()->where(['post_id' => $post->id, 'user_id' => Yii::$app->user->id])->count() > 0;
+        } else
             $this->redirect(['blog']);
 
         //var_dump($post->comments);
@@ -161,28 +153,24 @@ class DefaultController extends Controller
             'post' => $post,
             'comments' => $comments,
             'comment' => $comment,
+            'liked' => $liked,
         ]);
     }
 
     protected function newComment($post)
     {
         $comment = new BlogComment;
-        if(isset($_POST['ajax']) && $_POST['ajax']==='comment-form')
-        {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'comment-form') {
             echo ActiveForm::validate($comment);
             Yii::app()->end();
         }
 
-        if(Yii::$app->request->post('BlogComment'))
-        {
+        if (Yii::$app->request->post('BlogComment')) {
             $comment->load(Yii::$app->request->post());
-            if($post->addComment($comment))
-            {
-                if($comment->status == Status::STATUS_INACTIVE)
+            if ($post->addComment($comment)) {
+                if ($comment->status == Status::STATUS_INACTIVE)
                     echo Yii::$app->formatter->asText('success');
-            }
-            else
-            {
+            } else {
                 echo 'failed';
             }
             die();
