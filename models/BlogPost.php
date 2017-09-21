@@ -26,6 +26,11 @@ use yii\helpers\Html;
  * @property integer $status
  * @property integer $created_at
  * @property integer $updated_at
+ * @property integer $likes
+ * @property integer $with_donations
+ * @property integer $amount
+ * @property integer $donated
+ * @property integer $in_top
  *
  * @property BlogComment[] $blogComments
  * @property BlogCatalog $catalog
@@ -92,6 +97,11 @@ class BlogPost extends \yii\db\ActiveRecord
             'created_at' => Module::t('blog', 'Created At'),
             'updated_at' => Module::t('blog', 'Updated At'),
             'commentsCount' => Module::t('blog', 'Comments Count'),
+            'likes' => Module::t('blog', 'Likes Count'),
+            'with_donations' => Module::t('blog', 'With Donations'),
+            'amount' => Module::t('blog', 'Amount Donations'),
+            'donated' => Module::t('blog', 'Already Donated'),
+            'in_top' => Module::t('blog', 'Pin "Need Help"'),
         ];
     }
 
