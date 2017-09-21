@@ -254,4 +254,14 @@ class BlogPost extends \yii\db\ActiveRecord
         return $comment->save();
     }
 
+    public function getDonations()
+    {
+        $donations = BlogPostDonation::find()->where(['post_id' => $this->id])->all();
+        $donationsSum = 0;
+        foreach ($donations as $donation) {
+            $donationsSum += $donation->amount;
+        }
+        return $donationsSum;
+    }
+
 }

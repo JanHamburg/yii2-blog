@@ -16,7 +16,7 @@ use mihaildev\ckeditor\CKEditor;
 <div class="blog-post-form">
 
     <?php $form = ActiveForm::begin([
-        'options'=>['class' => 'form-horizontal', 'enctype'=>'multipart/form-data'],
+        'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-5\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
@@ -29,7 +29,7 @@ use mihaildev\ckeditor\CKEditor;
 
     <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'content')->widget(CKEditor::className(),[
+    <?= $form->field($model, 'content')->widget(CKEditor::className(), [
         'editorOptions' => [
             'preset' => 'full',
             'inline' => false,
@@ -43,6 +43,12 @@ use mihaildev\ckeditor\CKEditor;
     <?= $form->field($model, 'banner')->fileInput() ?>
 
     <?= $form->field($model, 'click')->textInput() ?>
+
+    <?= $form->field($model, 'likes')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'with_donations')->checkbox() ?>
+    <?= $form->field($model, 'amount')->textInput() ?>
+    <?= $form->field($model, 'donations')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'in_top')->checkbox() ?>
 
     <?= $form->field($model, 'status')->dropDownList(\funson86\blog\models\Status::labels()) ?>
 

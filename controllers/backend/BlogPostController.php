@@ -65,7 +65,7 @@ class BlogPostController extends Controller
     public function actionView($id)
     {
         //if(!Yii::$app->user->can('readPost')) throw new HttpException(401, 'No Auth');
-        
+
         return $this->render('view', [
             'model' => $this->findModel($id),
         ]);
@@ -123,13 +123,14 @@ class BlogPostController extends Controller
         if ($model->load(Yii::$app->request->post())) {
             $model->banner = UploadedFile::getInstance($model, 'banner');
             if ($model->validate()) {
-                if($model->banner){
+                if ($model->banner) {
                     $bannerName = Yii::$app->params['blogUploadPath'] . date('Ymdhis') . rand(1000, 9999) . '.' . $model->banner->extension;
                     $model->banner->saveAs(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $bannerName);
                     $model->banner = $bannerName;
                 } else {
                     $model->banner = $oldBanner;
                 }
+                $model->donated = Yii::$app->request->post('donations');
 
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);

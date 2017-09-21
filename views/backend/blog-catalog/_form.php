@@ -44,6 +44,8 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => 255]) ?>
 
+    <?= $form->field($model, 'with_likes')->checkbox() ?>
+
     <?= $form->field($model, 'status')->dropDownList(\funson86\blog\models\Status::labels()) ?>
 
     <div class="form-group">
