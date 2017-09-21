@@ -92,7 +92,7 @@ class BlogCatalogController extends Controller
                     $model->banner->saveAs(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $bannerName);
                     $model->banner = $bannerName;
                 }
-                $model->with_likes = Yii::$app->request->post('with_likes');
+                $model->with_likes = Yii::$app->request->post('BlogCatalog[with_likes]');
                 $model->save(false);
 
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -131,7 +131,7 @@ class BlogCatalogController extends Controller
                 } else {
                     $model->banner = $oldBanner;
                 }
-                $model->with_likes = Yii::$app->request->post('with_likes');
+                $model->with_likes = Yii::$app->request->post('BlogCatalog[with_likes]');
 
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
