@@ -61,12 +61,12 @@ class BlogCatalog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id', 'is_nav', 'sort_order', 'page_size', 'status'], 'integer'],
+            [['parent_id', 'is_nav', 'sort_order', 'page_size', 'status','with_likes'], 'integer'],
             [['title', 'surname'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'template', 'redirect_url'], 'string', 'max' => 255],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
-            [['surname'], 'string', 'max' => 128]
+            [['surname'], 'string', 'max' => 128],
         ];
     }
 

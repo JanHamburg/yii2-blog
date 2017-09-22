@@ -69,7 +69,7 @@ class BlogPost extends \yii\db\ActiveRecord
     {
         return [
             [['catalog_id', 'title', 'content', 'tags', 'surname', 'user_id'], 'required'],
-            [['catalog_id', 'click', 'user_id', 'status'], 'integer'],
+            [['catalog_id', 'click', 'user_id', 'status','likes','with_donations','amount','donated','in_top'], 'integer'],
             [['brief', 'content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
