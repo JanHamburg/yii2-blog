@@ -166,10 +166,10 @@ class DefaultController extends Controller
                 $like->post_id = $_POST['post_id'];
                 $like->user_id = $userId;
                 if ($like->validate()) {
-                    echo $like->validate();
                     $like->save();
+                    echo 'success';
                 } else {
-                    echo false;
+                    echo 'failed';
                 }
             } elseif ($_POST['action'] === 'dislike') {
                 $like = BlogPostLike::find()
@@ -179,9 +179,10 @@ class DefaultController extends Controller
                     ])
                     ->one();
                 if ($like !== null) {
-                    echo $like->delete();
+                    $like->delete();
+                    echo 'success';
                 } else {
-                    echo false;
+                    echo 'failed';
                 }
             }
             Yii::$app->end();
