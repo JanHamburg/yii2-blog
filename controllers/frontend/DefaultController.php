@@ -171,7 +171,7 @@ class DefaultController extends Controller
                     echo false;
                 }
             } elseif ($_POST['action'] === 'dislike') {
-                $like = BlogPost::find()
+                $like = BlogPostLike::find()
                     ->where([
                         'post_id' => $_POST['post_id'],
                         'user_id' => $_POST['user_id'],
