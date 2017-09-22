@@ -295,4 +295,15 @@ class BlogPost extends \yii\db\ActiveRecord
             ->all();
     }
 
+    public function updateLikesCount()
+    {
+
+        $likesCount = BlogPostLike::find()
+            ->where([
+                'post_id' => $this->id,
+            ])->count();
+        $this->likes = $likesCount;
+        $this->save();
+    }
+
 }

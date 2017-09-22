@@ -185,6 +185,7 @@ class DefaultController extends Controller
                     echo 'failed';
                 }
             }
+            $like->post->updateLikesCount();
             Yii::$app->end();
         }
     }

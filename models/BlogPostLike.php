@@ -13,6 +13,9 @@ use yii\behaviors\TimestampBehavior;
  * @property integer $created_at
  * @property integer $updated_at
  *
+ * @property BlogPost $post
+ * @property User $user
+ *
  */
 class BlogPostLike extends \yii\db\ActiveRecord
 {
