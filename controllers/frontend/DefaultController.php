@@ -160,10 +160,11 @@ class DefaultController extends Controller
     public function actionLike()
     {
         $like = new BlogPostLike();
+        $userId = Yii::$app->user->id;
         if (isset($_POST)) {
             if ($_POST['action'] === 'like') {
                 $like->post_id = $_POST['post_id'];
-                $like->user_id = $_POST['user_id'];
+                $like->user_id = $userId;
                 if ($like->validate()) {
                     echo $like->validate();
                     $like->save();
@@ -174,7 +175,7 @@ class DefaultController extends Controller
                 $like = BlogPostLike::find()
                     ->where([
                         'post_id' => $_POST['post_id'],
-                        'user_id' => $_POST['user_id'],
+                        'user_id' => $userId,
                     ])
                     ->one();
                 if ($like !== null) {
