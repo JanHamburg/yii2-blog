@@ -73,7 +73,8 @@ class BlogPost extends \yii\db\ActiveRecord
             [['brief', 'content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
-            [['title', 'tags', 'surname'], 'string', 'max' => 128]
+            [['title', 'tags', 'surname'], 'string', 'max' => 128],
+            [['with_likes','in_top'], 'default', 'value' => 0],
         ];
     }
 

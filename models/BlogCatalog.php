@@ -61,12 +61,13 @@ class BlogCatalog extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['parent_id', 'is_nav', 'sort_order', 'page_size', 'status','with_likes'], 'integer'],
+            [['parent_id', 'is_nav', 'sort_order', 'page_size', 'status', 'with_likes'], 'integer'],
             [['title', 'surname'], 'required'],
             [['created_at', 'updated_at'], 'safe'],
             [['title', 'template', 'redirect_url'], 'string', 'max' => 255],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['surname'], 'string', 'max' => 128],
+            ['with_likes', 'default', 'value' => 0],
         ];
     }
 
@@ -164,19 +165,16 @@ class BlogCatalog extends \yii\db\ActiveRecord
      */
     public static function getOneIsNavLabel($isNav = null)
     {
-        if($isNav)
-        {
+        if ($isNav) {
             $arrayIsNav = self::getArrayIsNav();
             return $arrayIsNav[$isNav];
-        }
-        else
+        } else
             return;
     }
 
     public function getIsNavLabel()
     {
-        if ($this->_isNavLabel === null)
-        {
+        if ($this->_isNavLabel === null) {
             $arrayIsNav = self::getArrayIsNav();
             $this->_isNavLabel = $arrayIsNav[$this->is_nav];
         }
@@ -184,11 +182,11 @@ class BlogCatalog extends \yii\db\ActiveRecord
     }
 
     /**
-     * @param int $parentId  parent catalog id
-     * @param array $array  catalog array list
-     * @param int $level  catalog level, will affect $repeat
-     * @param int $add  times of $repeat
-     * @param string $repeat  symbols or spaces to be added for sub catalog
+     * @param int $parentId parent catalog id
+     * @param array $array catalog array list
+     * @param int $level catalog level, will affect $repeat
+     * @param int $add times of $repeat
+     * @param string $repeat symbols or spaces to be added for sub catalog
      * @return array  catalog collections
      */
 
@@ -196,34 +194,30 @@ class BlogCatalog extends \yii\db\ActiveRecord
     {
         $strRepeat = '';
         // add some spaces or symbols for non top level categories
-        if ($level>1) {
-            for($j = 0; $j < $level; $j ++)
-            {
+        if ($level > 1) {
+            for ($j = 0; $j < $level; $j++) {
                 $strRepeat .= $repeat;
             }
         }
 
         // i feel this is useless
-        if($level>0)
+        if ($level > 0)
             $strRepeat .= '';
 
-        $newArray = array ();
-        $tempArray = array ();
+        $newArray = array();
+        $tempArray = array();
 
         //performance is not very good here
-        foreach ( ( array ) $array as $v )
-        {
-            if ($v['parent_id'] == $parentId)
-            {
-                $newArray [] = array ('id' => $v['id'], 'title' => $v['title'], 'parent_id' => $v['parent_id'],  'sort_order' => $v['sort_order'],
+        foreach (( array )$array as $v) {
+            if ($v['parent_id'] == $parentId) {
+                $newArray [] = array('id' => $v['id'], 'title' => $v['title'], 'parent_id' => $v['parent_id'], 'sort_order' => $v['sort_order'],
                     'banner' => $v['banner'], //'postsCount'=>$v['postsCount'],
                     'is_nav' => $v['is_nav'], 'template' => $v['template'],
-                    'status' => $v['status'], 'created_at' => $v['created_at'], 'updated_at' => $v['updated_at'], 'redirect_url' => $v['redirect_url'], 'str_repeat' => $strRepeat, 'str_label' => $strRepeat.$v['title'],);
+                    'status' => $v['status'], 'created_at' => $v['created_at'], 'updated_at' => $v['updated_at'], 'redirect_url' => $v['redirect_url'], 'str_repeat' => $strRepeat, 'str_label' => $strRepeat . $v['title'],);
 
-                $tempArray = self::get ( $v['id'], $array, ($level + $add), $add, $repeat);
-                if ($tempArray)
-                {
-                    $newArray = array_merge ( $newArray, $tempArray );
+                $tempArray = self::get($v['id'], $array, ($level + $add), $add, $repeat);
+                if ($tempArray) {
+                    $newArray = array_merge($newArray, $tempArray);
                 }
             }
         }
@@ -237,44 +231,38 @@ class BlogCatalog extends \yii\db\ActiveRecord
      * @return array
      */
 
-    static public function getCatalog($parentId=0,$array = array())
+    static public function getCatalog($parentId = 0, $array = array())
     {
-        $newArray=array();
-        foreach ((array)$array as $v)
-        {
-            if ($v['parent_id']==$parentId)
-            {
-                $newArray[$v['id']]=array(
-                    'text'=>$v['title'].' 导航['.($v['is_nav'] ? Module::t('common', 'CONSTANT_YES') : Module::t('common', 'CONSTANT_NO')).'] 排序['.$v['sort_order'].
-                        '] 类型['.($v['page_type'] == 'list' ? Module::t('common', 'PAGE_TYPE_LIST') : Module::t('common', 'PAGE_TYPE_PAGE')).'] 状态['.
-                        F::getStatus2($v['status']).'] [<a href="'.Yii::app()->createUrl('/catalog/update',array('id'=>$v['id'])).'">修改</a>][<a href="'
-                        .Yii::app()->createUrl('/catalog/create',array('id'=>$v['id'])).'">增加子菜单</a>]&nbsp;&nbsp[<a href="'.
-                        Yii::app()->createUrl('/catalog/delete',array('id'=>$v['id'])).'">删除</a>]',
+        $newArray = array();
+        foreach ((array)$array as $v) {
+            if ($v['parent_id'] == $parentId) {
+                $newArray[$v['id']] = array(
+                    'text' => $v['title'] . ' 导航[' . ($v['is_nav'] ? Module::t('common', 'CONSTANT_YES') : Module::t('common', 'CONSTANT_NO')) . '] 排序[' . $v['sort_order'] .
+                        '] 类型[' . ($v['page_type'] == 'list' ? Module::t('common', 'PAGE_TYPE_LIST') : Module::t('common', 'PAGE_TYPE_PAGE')) . '] 状态[' .
+                        F::getStatus2($v['status']) . '] [<a href="' . Yii::app()->createUrl('/catalog/update', array('id' => $v['id'])) . '">修改</a>][<a href="'
+                        . Yii::app()->createUrl('/catalog/create', array('id' => $v['id'])) . '">增加子菜单</a>]&nbsp;&nbsp[<a href="' .
+                        Yii::app()->createUrl('/catalog/delete', array('id' => $v['id'])) . '">删除</a>]',
                     //'children'=>array(),
                 );
 
-                $tempArray = self::getCatalog($v['id'],$array);
-                if($tempArray)
-                {
-                    $newArray[$v['id']]['children']=$tempArray;
+                $tempArray = self::getCatalog($v['id'], $array);
+                if ($tempArray) {
+                    $newArray[$v['id']]['children'] = $tempArray;
                 }
             }
         }
         return $newArray;
     }
 
-    static public function getCatalogIdStr($parentId=0,$array = array())
+    static public function getCatalogIdStr($parentId = 0, $array = array())
     {
         $str = $parentId;
-        foreach ((array)$array as $v)
-        {
-            if ($v['parent_id']==$parentId)
-            {
+        foreach ((array)$array as $v) {
+            if ($v['parent_id'] == $parentId) {
 
-                $tempStr = self::getCatalogIdStr($v['id'],$array);
-                if($tempStr)
-                {
-                    $str .= ','.$tempStr;
+                $tempStr = self::getCatalogIdStr($v['id'], $array);
+                if ($tempStr) {
+                    $str .= ',' . $tempStr;
                 }
             }
         }
@@ -283,16 +271,14 @@ class BlogCatalog extends \yii\db\ActiveRecord
 
     static public function getRootCatalogId($id = 0, $array = [])
     {
-        if(0 == $id)
-        {
+        if (0 == $id) {
             return 0;
         }
 
-        foreach ((array)$array as $v)
-        {
+        foreach ((array)$array as $v) {
             if ($v['id'] == $id) {
                 $parentId = $v['parent_id'];
-                if(0 == $parentId)
+                if (0 == $parentId)
                     return $id;
                 else
                     return self::getRootCatalogId($parentId, $array);
@@ -300,19 +286,16 @@ class BlogCatalog extends \yii\db\ActiveRecord
         }
     }
 
-    static public function getCatalogSub2($id=0,$array = array())
+    static public function getCatalogSub2($id = 0, $array = array())
     {
-        if(0 == $id)
-        {
+        if (0 == $id) {
             return 0;
         }
 
         $arrayResult = array();
         $rootId = self::getRootCatalogId($id, $array);
-        foreach ((array)$array as $v)
-        {
-            if ($v['parent_id']==$rootId)
-            {
+        foreach ((array)$array as $v) {
+            if ($v['parent_id'] == $rootId) {
                 array_push($arrayResult, $v);
             }
         }
@@ -320,10 +303,9 @@ class BlogCatalog extends \yii\db\ActiveRecord
         return $arrayResult;
     }
 
-    static public function getBreadcrumbs($id=0,$array = array())
+    static public function getBreadcrumbs($id = 0, $array = array())
     {
-        if(0 == $id)
-        {
+        if (0 == $id) {
             return;
         }
 
@@ -332,7 +314,7 @@ class BlogCatalog extends \yii\db\ActiveRecord
         return array_reverse($arrayResult);
     }
 
-    static public function getPathToRoot($id=0,$array = array())
+    static public function getPathToRoot($id = 0, $array = array())
     {
         if (0 == $id) {
             return array();
