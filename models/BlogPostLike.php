@@ -44,6 +44,7 @@ class BlogPostLike extends \yii\db\ActiveRecord
             [['post_id', 'user_id'], 'required'],
             [['post_id', 'user_id'], 'integer'],
             [['created_at', 'updated_at'], 'safe'],
+            [['post_id', 'user_id'], 'unique', 'targetAttribute' => ['post_id', 'user_id']]
         ];
     }
 

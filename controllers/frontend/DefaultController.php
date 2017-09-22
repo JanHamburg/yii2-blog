@@ -157,12 +157,42 @@ class DefaultController extends Controller
         ]);
     }
 
+    public function actionLike()
+    {
+        $like = new BlogPostLike();
+        if (isset($_POST)) {
+            if ($_POST['action'] === 'like') {
+                $like->post_id = $_POST['post_id'];
+                $like->user_id = $_POST['user_id'];
+                if ($like->validate()) {
+                    echo $like->validate();
+                    $like->save();
+                } else {
+                    echo false;
+                }
+            } elseif ($_POST['action'] === 'dislike') {
+                $like = BlogPost::find()
+                    ->where([
+                        'post_id' => $_POST['post_id'],
+                        'user_id' => $_POST['user_id'],
+                    ])
+                    ->one();
+                if ($like !== null) {
+                    echo $like->delete();
+                } else {
+                    echo false;
+                }
+            }
+            Yii::$app->end();
+        }
+    }
+
     protected function newComment($post)
     {
         $comment = new BlogComment;
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'comment-form') {
             echo ActiveForm::validate($comment);
-            Yii::app()->end();
+            Yii::$app->end();
         }
 
         if (Yii::$app->request->post('BlogComment')) {
