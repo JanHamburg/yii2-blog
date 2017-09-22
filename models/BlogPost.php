@@ -35,6 +35,7 @@ use yii\helpers\Html;
  * @property BlogComment[] $blogComments
  * @property BlogCatalog $catalog
  * @property BlogPost[] $similarPosts
+ * @property bool $liked
  */
 class BlogPost extends \yii\db\ActiveRecord
 {
@@ -69,13 +70,13 @@ class BlogPost extends \yii\db\ActiveRecord
     {
         return [
             [['catalog_id', 'title', 'content', 'tags', 'surname', 'user_id'], 'required'],
-            [['catalog_id', 'click', 'user_id', 'status','likes','amount','donated'], 'integer'],
+            [['catalog_id', 'click', 'user_id', 'status', 'likes', 'amount', 'donated'], 'integer'],
             [['brief', 'content'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['title', 'tags', 'surname'], 'string', 'max' => 128],
-            [['with_donations','in_top'], 'integer'],
-            [['with_donations','in_top'], 'default', 'value' => 0],
+            [['with_donations', 'in_top'], 'integer'],
+            [['with_donations', 'in_top'], 'default', 'value' => 0],
         ];
     }
 
@@ -264,6 +265,19 @@ class BlogPost extends \yii\db\ActiveRecord
             $donationsSum += $donation->amount;
         }
         return $donationsSum;
+    }
+
+    public function getLiked()
+    {
+        if (!Yii::$app->user->isGuest) {
+            return BlogPostLike::find()
+                    ->where([
+                        'post_id' => $this->id,
+                        'user_id' => Yii::$app->user->id
+                    ])
+                    ->count() > 0;
+        }
+        return false;
     }
 
 }
