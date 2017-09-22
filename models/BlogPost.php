@@ -36,6 +36,7 @@ use yii\helpers\Html;
  * @property BlogCatalog $catalog
  * @property BlogPost[] $similarPosts
  * @property bool $liked
+ * @property BlogPost[] $topStories
  */
 class BlogPost extends \yii\db\ActiveRecord
 {
@@ -43,6 +44,9 @@ class BlogPost extends \yii\db\ActiveRecord
 
     private $_status;
     const SIMILAR_LIMIT = 3;
+    const WITH_DONATIONS = 1;
+    const IN_TOP = 1;
+    const LIMIT_TOP_STORIES = 6;
 
     /**
      * @inheritdoc
@@ -278,6 +282,17 @@ class BlogPost extends \yii\db\ActiveRecord
                     ->count() > 0;
         }
         return false;
+    }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getTopStories()
+    {
+        return BlogPost::find()
+            ->where(['with_donations' => self::WITH_DONATIONS, 'in_top' => self::IN_TOP])
+            ->limit(self::LIMIT_TOP_STORIES)
+            ->all();
     }
 
 }
