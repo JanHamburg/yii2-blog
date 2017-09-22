@@ -130,8 +130,6 @@ class BlogPostController extends Controller
                 } else {
                     $model->banner = $oldBanner;
                 }
-                $model->donated = Yii::$app->request->post('donations');
-
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {

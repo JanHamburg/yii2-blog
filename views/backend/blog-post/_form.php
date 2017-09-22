@@ -47,7 +47,7 @@ use mihaildev\ckeditor\CKEditor;
     <?= $form->field($model, 'likes')->textInput(['readonly' => true]) ?>
     <?= $form->field($model, 'with_donations')->checkbox() ?>
     <?= $form->field($model, 'amount')->textInput() ?>
-    <?= $form->field($model, 'donations')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'donated')->textInput(['readonly' => true]) ?>
     <?= $form->field($model, 'in_top')->checkbox() ?>
 
     <?= $form->field($model, 'status')->dropDownList(\funson86\blog\models\Status::labels()) ?>

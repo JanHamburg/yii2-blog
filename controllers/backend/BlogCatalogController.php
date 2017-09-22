@@ -130,8 +130,6 @@ class BlogCatalogController extends Controller
                 } else {
                     $model->banner = $oldBanner;
                 }
-                $model->with_likes = Yii::$app->request->post('BlogCatalog[with_likes]');
-
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
