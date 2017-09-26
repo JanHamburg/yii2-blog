@@ -5,6 +5,7 @@ namespace funson86\blog\models;
 use common\models\User;
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\SluggableBehavior;
 use yii\db\Expression;
 use funson86\blog\Module;
 use yii\helpers\ArrayHelper;
@@ -31,6 +32,7 @@ use yii\helpers\Html;
  * @property integer $amount
  * @property integer $donated
  * @property integer $in_top
+ * @property string $slug
  *
  * @property BlogComment[] $blogComments
  * @property BlogCatalog $catalog
@@ -64,6 +66,10 @@ class BlogPost extends \yii\db\ActiveRecord
     {
         return [
             'class' => TimestampBehavior::className(),
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+            ],
         ];
     }
 

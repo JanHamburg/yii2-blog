@@ -104,6 +104,21 @@ class DefaultController extends Controller
                 'status' => Status::STATUS_ACTIVE,
                 'catalog_id' => Yii::$app->request->get('id'),
             ]);
+        } elseif (Yii::$app->request->get('slug') && Yii::$app->request->get('slug') != "") {
+            $catalog = BlogCatalog::find()
+                ->where([
+                    'slug' => Yii::$app->request->get('slug'),
+                ])
+                ->one();
+            if ($catalog) {
+                $query = BlogPost::find();
+                $query->where([
+                    'status' => Status::STATUS_ACTIVE,
+                    'catalog_id' => $catalog->id,
+                ]);
+            } else {
+                $this->redirect(['blog/index']);
+            }
         } else
             $this->redirect(['blog/index']);
 
@@ -139,14 +154,23 @@ class DefaultController extends Controller
 
     public function actionView()
     {
+        $post = null;
         if (Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0) {
             $post = BlogPost::findOne(Yii::$app->request->get('id'));
-            $post->updateCounters(['click' => 1]);
-            $comments = BlogComment::find()->where(['post_id' => $post->id, 'status' => Status::STATUS_ACTIVE])->orderBy(['created_at' => SORT_ASC])->all();
-            $comment = $this->newComment($post);
-            $liked = BlogPostLike::find()->where(['post_id' => $post->id, 'user_id' => Yii::$app->user->id])->count() > 0;
-        } else
+        } elseif (Yii::$app->request->get('slug') && Yii::$app->request->get('slug') > 0) {
+            $post = BlogPost::find()
+                ->where([
+                    'slug' => Yii::$app->request->get('slug')
+                ])
+                ->one();
+        }
+        if ($post === null) {
             $this->redirect(['blog']);
+        }
+        $post->updateCounters(['click' => 1]);
+        $comments = BlogComment::find()->where(['post_id' => $post->id, 'status' => Status::STATUS_ACTIVE])->orderBy(['created_at' => SORT_ASC])->all();
+        $comment = $this->newComment($post);
+        $liked = BlogPostLike::find()->where(['post_id' => $post->id, 'user_id' => Yii::$app->user->id])->count() > 0;
 
         //var_dump($post->comments);
         return $this->render('view', [

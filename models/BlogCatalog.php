@@ -4,6 +4,7 @@ namespace funson86\blog\models;
 
 use Yii;
 use yii\behaviors\TimestampBehavior;
+use yii\behaviors\SluggableBehavior;
 use yii\db\Expression;
 use funson86\blog\Module;
 
@@ -24,6 +25,7 @@ use funson86\blog\Module;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $with_likes
+ * @property string $slug
  *
  * @property BlogPost[] $blogPosts
  */
@@ -52,6 +54,10 @@ class BlogCatalog extends \yii\db\ActiveRecord
     {
         return [
             TimestampBehavior::className(),
+            [
+                'class' => SluggableBehavior::className(),
+                'attribute' => 'title',
+            ],
         ];
     }
 
@@ -63,7 +69,7 @@ class BlogCatalog extends \yii\db\ActiveRecord
         return [
             [['parent_id', 'is_nav', 'sort_order', 'page_size', 'status'], 'integer'],
             [['title', 'surname'], 'required'],
-            [['created_at', 'updated_at'], 'safe'],
+            [['created_at', 'updated_at','slug'], 'safe'],
             [['title', 'template', 'redirect_url'], 'string', 'max' => 255],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['surname'], 'string', 'max' => 128],
