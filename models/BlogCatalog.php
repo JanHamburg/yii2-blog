@@ -37,15 +37,13 @@ class BlogCatalog extends \yii\db\ActiveRecord
     const PAGE_TYPE_PAGE = 'page';
     private $_isNavLabel;
     private $_status;
-    public $id, $parent_id, $title, $surname, $banner, $is_nav, $sort_order, $page_size, $template,
-        $redirect_url, $status, $created_at, $updated_at, $with_likes, $slug;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'blog_catalog';
+        return '{{%blog_catalog}}';
     }
 
     /**

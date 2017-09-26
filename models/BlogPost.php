@@ -49,15 +49,13 @@ class BlogPost extends \yii\db\ActiveRecord
     const WITH_DONATIONS = 1;
     const IN_TOP = 1;
     const LIMIT_TOP_STORIES = 6;
-    public $id, $catalog_id, $title, $content, $tags, $surname, $banner, $click, $user_id, $status,
-        $created_at, $updated_at, $likes, $with_donations, $amount, $donated, $in_top, $slug;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return 'blog_post';
+        return '{{%blog_post}}';
     }
 
     /**
