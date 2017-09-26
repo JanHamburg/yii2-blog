@@ -166,19 +166,20 @@ class DefaultController extends Controller
         }
         if ($post === null) {
             $this->redirect(['blog']);
-        }
-        $post->updateCounters(['click' => 1]);
-        $comments = BlogComment::find()->where(['post_id' => $post->id, 'status' => Status::STATUS_ACTIVE])->orderBy(['created_at' => SORT_ASC])->all();
-        $comment = $this->newComment($post);
-        $liked = BlogPostLike::find()->where(['post_id' => $post->id, 'user_id' => Yii::$app->user->id])->count() > 0;
+        } else {
+            $post->updateCounters(['click' => 1]);
+            $comments = BlogComment::find()->where(['post_id' => $post->id, 'status' => Status::STATUS_ACTIVE])->orderBy(['created_at' => SORT_ASC])->all();
+            $comment = $this->newComment($post);
+            $liked = BlogPostLike::find()->where(['post_id' => $post->id, 'user_id' => Yii::$app->user->id])->count() > 0;
 
-        //var_dump($post->comments);
-        return $this->render('view', [
-            'post' => $post,
-            'comments' => $comments,
-            'comment' => $comment,
-            'liked' => $liked,
-        ]);
+            //var_dump($post->comments);
+            return $this->render('view', [
+                'post' => $post,
+                'comments' => $comments,
+                'comment' => $comment,
+                'liked' => $liked,
+            ]);
+        }
     }
 
     public function actionLike()
