@@ -37,6 +37,8 @@ class BlogCatalog extends \yii\db\ActiveRecord
     const PAGE_TYPE_PAGE = 'page';
     private $_isNavLabel;
     private $_status;
+    public $id, $parent_id, $title, $surname, $banner, $is_nav, $sort_order, $page_size, $template,
+        $redirect_url, $status, $created_at, $updated_at, $with_likes, $slug;
 
     /**
      * @inheritdoc
@@ -69,7 +71,7 @@ class BlogCatalog extends \yii\db\ActiveRecord
         return [
             [['parent_id', 'is_nav', 'sort_order', 'page_size', 'status'], 'integer'],
             [['title', 'surname'], 'required'],
-            [['created_at', 'updated_at','slug'], 'safe'],
+            [['created_at', 'updated_at', 'slug'], 'safe'],
             [['title', 'template', 'redirect_url'], 'string', 'max' => 255],
             [['banner'], 'file', 'extensions' => 'jpg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['surname'], 'string', 'max' => 128],
