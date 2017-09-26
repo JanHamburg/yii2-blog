@@ -1,6 +1,7 @@
 <?php
 
 use yii\db\Migration;
+use yii\db\Schema;
 
 /**
  * Class m170926_093551_add_columns_to_blog_catalog
