@@ -98,7 +98,9 @@ class DefaultController extends Controller
 
     public function actionCatalog()
     {
+        $catalog = null;
         if (Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0) {
+            $catalog = BlogCatalog::findOne(Yii::$app->request->get('id'));
             $query = BlogPost::find();
             $query->where([
                 'status' => Status::STATUS_ACTIVE,
@@ -147,6 +149,7 @@ class DefaultController extends Controller
             ->all();
 
         return $this->render('index', [
+            'catalog' => $catalog,
             'posts' => $posts,
             'pagination' => $pagination,
         ]);
@@ -157,7 +160,7 @@ class DefaultController extends Controller
         $post = null;
         if (Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0) {
             $post = BlogPost::findOne(Yii::$app->request->get('id'));
-        } elseif (Yii::$app->request->get('slug') && Yii::$app->request->get('slug') > 0) {
+        } elseif (Yii::$app->request->get('slug') && Yii::$app->request->get('slug') != "") {
             $post = BlogPost::find()
                 ->where([
                     'slug' => Yii::$app->request->get('slug')
