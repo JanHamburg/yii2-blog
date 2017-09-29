@@ -116,8 +116,9 @@ class DefaultController extends Controller
             $query = BlogPost::find();
             $query->where([
                 'status' => Status::STATUS_ACTIVE,
-                ['in', 'catalog_id', $catalogIds],
+                'catalog_id' => $catalogIds,
             ]);
+
         } else {
             $this->redirect(['blog/index']);
         }
