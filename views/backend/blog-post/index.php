@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'image',
                 'format' => 'html',
                 'value' => function ($data) {
-                    return Html::img(Yii::getAlias('@frontend/web/') . $data['banner'],
+                    return Html::img(Yii::getAlias('@static/') . $data['banner'],
                         ['width' => '70px']);
                 },
             ],

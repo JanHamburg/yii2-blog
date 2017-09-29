@@ -46,7 +46,7 @@ use mihaildev\ckeditor\CKEditor;
         $model->banner !== null
         && is_file(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $model->banner)
     ): ?>
-        <img src="<?= Url::to('@frontend/web/' . $model->banner) ?>" alt="">
+        <img src="<?= Url::to('@static/' . $model->banner) ?>" alt="">
     <?php endif; ?>
 
     <?= $form->field($model, 'click')->textInput() ?>
