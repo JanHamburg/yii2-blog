@@ -334,7 +334,6 @@ class m170929_131251_add_default_blog_structure extends Migration
         $time = time();
         $password_hash = Yii::$app->security->generatePasswordHash('admin12345');
         $auth_key = Yii::$app->security->generateRandomString();
-        $token = Yii::$app->security->generateRandomString();
-        return "INSERT INTO {{%users}} (`username`, `email`, `password_hash`, `auth_key`, `token`, `role`, `status_id`, `created_at`, `updated_at`) VALUES ('admin', 'admin@demo.com', '$password_hash', '$auth_key', '$token', 'superadmin', 1, $time, $time)";
+        return "INSERT INTO {{%user}} (`username`, `email`, `password_hash`, `auth_key`, `status`, `created_at`, `updated_at`) VALUES ('admin', 'admin@demo.com', '$password_hash', '$auth_key', 1, $time, $time)";
     }
 }
