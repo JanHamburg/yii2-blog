@@ -18,7 +18,7 @@ use mihaildev\ckeditor\CKEditor;
     <?php $form = ActiveForm::begin([
         'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
-            'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-5\">{error}</div>",
+            'template' => "{label}\n<div class=\"col-lg-6\">{input}</div>\n<div class=\"col-lg-2\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
         ],
     ]); ?>
@@ -31,7 +31,7 @@ use mihaildev\ckeditor\CKEditor;
 
     <?= $form->field($model, 'content')->widget(CKEditor::className(), [
         'editorOptions' => [
-            'preset' => 'full',
+            'preset' => 'basic',
             'inline' => false,
         ],
     ]); ?>
@@ -41,6 +41,12 @@ use mihaildev\ckeditor\CKEditor;
     <?= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
 
     <?= $form->field($model, 'banner')->fileInput() ?>
+    <?php if (
+        $model->banner !== null
+        && is_file(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $model->banner)
+    ): ?>
+        <img src="<?= Url::to('@frontend/web/' . $model->banner) ?>" alt="">
+    <?php endif; ?>
 
     <?= $form->field($model, 'click')->textInput() ?>
 

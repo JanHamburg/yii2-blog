@@ -28,18 +28,26 @@ $this->params['breadcrumbs'][] = $this->title;
             ['class' => 'yii\grid\CheckboxColumn'],
 
             [
-                'attribute'=>'catalog_id',
-                'value'=>function ($model) {
-                        return $model->catalog->title;
-                    },
+                'attribute' => 'catalog_id',
+                'value' => function ($model) {
+                    return $model->catalog->title;
+                },
                 'filter' => Html::activeDropDownList(
-                        $searchModel,
-                        'catalog_id',
-                        \funson86\blog\models\BlogPost::getArrayCatalog(),
-                        ['class' => 'form-control', 'prompt' => Module::t('blog', 'Please Filter')]
-                    )
+                    $searchModel,
+                    'catalog_id',
+                    \funson86\blog\models\BlogPost::getArrayCatalog(),
+                    ['class' => 'form-control', 'prompt' => Module::t('blog', 'Please Filter')]
+                )
             ],
             'title',
+            [
+                'attribute' => 'image',
+                'format' => 'html',
+                'value' => function ($data) {
+                    return Html::img(Yii::getAlias('@frontend/web') . $data['banner'],
+                        ['width' => '70px']);
+                },
+            ],
             // 'content:ntext',
             // 'tags',
             // 'surname',
@@ -50,22 +58,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'status',
                 'format' => 'html',
                 'value' => function ($model) {
-                        if ($model->status === Status::STATUS_ACTIVE) {
-                            $class = 'label-success';
-                        } elseif ($model->status === Status::STATUS_INACTIVE) {
-                            $class = 'label-warning';
-                        } else {
-                            $class = 'label-danger';
-                        }
+                    if ($model->status === Status::STATUS_ACTIVE) {
+                        $class = 'label-success';
+                    } elseif ($model->status === Status::STATUS_INACTIVE) {
+                        $class = 'label-warning';
+                    } else {
+                        $class = 'label-danger';
+                    }
 
-                        return '<span class="label ' . $class . '">' . $model->getStatus()->label . '</span>';
-                    },
+                    return '<span class="label ' . $class . '">' . $model->getStatus()->label . '</span>';
+                },
                 'filter' => Html::activeDropDownList(
-                        $searchModel,
-                        'status',
-                        Status::labels(),
-                        ['class' => 'form-control', 'prompt' => Module::t('blog', 'PROMPT_STATUS')]
-                    )
+                    $searchModel,
+                    'status',
+                    Status::labels(),
+                    ['class' => 'form-control', 'prompt' => Module::t('blog', 'PROMPT_STATUS')]
+                )
             ],
             'created_at:date',
             // 'update_time',
