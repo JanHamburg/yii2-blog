@@ -264,6 +264,8 @@ class m170929_131251_add_default_blog_structure extends Migration
             unset($category['posts']);
 
             $category['parent_id'] = 0;
+            $category['created_at'] = time();
+            $category['updated_at'] = time();
             $this->insert('{{%blog_catalog}}', $category);
 
             $insertedCategory = (new Query())->select('id')
@@ -273,6 +275,8 @@ class m170929_131251_add_default_blog_structure extends Migration
             $insertedId = $insertedCategory['id'];
             if (count($categoryPosts) > 0) {
                 foreach ($categoryPosts as $categoryPost) {
+                    $categoryPost['created_at'] = time();
+                    $categoryPost['updated_at'] = time();
                     $categoryPost['catalog_id'] = $insertedId;
                     $this->insert('{{%blog_post}}', $categoryPost);
                 }
@@ -286,6 +290,8 @@ class m170929_131251_add_default_blog_structure extends Migration
                     unset($subCategory['posts']);
 
                     $subCategory['parent_id'] = $insertedId;
+                    $subCategory['created_at'] = time();
+                    $subCategory['updated_at'] = time();
                     $this->insert('{{%blog_catalog}}', $subCategory);
 
                     $subInsertedCategory = (new Query())->select('id')
@@ -295,6 +301,8 @@ class m170929_131251_add_default_blog_structure extends Migration
                     $subInsertedId = $subInsertedCategory['id'];
                     if (count($subCategoryPosts) > 0) {
                         foreach ($subCategoryPosts as $subCategoryPost) {
+                            $subCategoryPost['created_at'] = time();
+                            $subCategoryPost['updated_at'] = time();
                             $subCategoryPost['catalog_id'] = $subInsertedId;
                             $this->insert('{{%blog_post}}', $subCategoryPost);
                         }
