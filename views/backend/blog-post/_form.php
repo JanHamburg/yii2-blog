@@ -32,8 +32,27 @@ use mihaildev\ckeditor\CKEditor;
 
     <?= $form->field($model, 'content')->widget(CKEditor::className(), [
         'editorOptions' => [
-            'preset' => 'basic',
+//            'preset' => 'basic',
             'inline' => false,
+            'toolbarGroups' => [
+                ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
+                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+                ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker', 'editing']],
+                ['name' => 'forms', 'groups' => ['forms']],
+                '/',
+                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'align', 'blocks', 'bidi', 'paragraph']],
+                '/',
+                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+                ['name' => 'styles', 'groups' => ['styles']],
+                ['name' => 'colors', 'groups' => ['colors']],
+                ['name' => 'tools', 'groups' => ['tools']],
+                ['name' => 'others', 'groups' => ['others']],
+                ['name' => 'about', 'groups' => ['about']],
+                ['name' => 'links', 'groups' => ['links']],
+                ['name' => 'insert', 'groups' => ['insert']]
+
+            ],
+            'removeButtons' => 'Save,NewPage,Preview,Print,Templates,Source,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Find,Replace,SelectAll,Scayt,Form,ImageButton,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,Strike,Subscript,Superscript,CopyFormatting,RemoveFormat,CreateDiv,BidiRtl,BidiLtr,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,Iframe,PageBreak,Styles,Format,Font,BGColor,ShowBlocks,About',
         ],
     ]); ?>
 

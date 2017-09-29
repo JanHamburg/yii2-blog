@@ -101,28 +101,26 @@ class DefaultController extends Controller
         $catalog = null;
         if (Yii::$app->request->get('id') && Yii::$app->request->get('id') > 0) {
             $catalog = BlogCatalog::findOne(Yii::$app->request->get('id'));
+        } elseif (Yii::$app->request->get('slug') && Yii::$app->request->get('slug') != "") {
+            $catalog = BlogCatalog::findOne(['slug' => Yii::$app->request->get('slug')]);
+        } else {
+            $this->redirect(['blog/index']);
+        }
+
+        if ($catalog) {
+            $catalogIds = [$catalog->id];
+            $subCatalogs = BlogCatalog::find()->where(['parent_id' => $catalog->id])->all();
+            foreach ($subCatalogs as $subCatalog) {
+                $catalogIds[] = $subCatalog->id;
+            }
             $query = BlogPost::find();
             $query->where([
                 'status' => Status::STATUS_ACTIVE,
-                'catalog_id' => Yii::$app->request->get('id'),
+                ['in', 'catalog_id', $catalogIds],
             ]);
-        } elseif (Yii::$app->request->get('slug') && Yii::$app->request->get('slug') != "") {
-            $catalog = BlogCatalog::find()
-                ->where([
-                    'slug' => Yii::$app->request->get('slug'),
-                ])
-                ->one();
-            if ($catalog) {
-                $query = BlogPost::find();
-                $query->where([
-                    'status' => Status::STATUS_ACTIVE,
-                    'catalog_id' => $catalog->id,
-                ]);
-            } else {
-                $this->redirect(['blog/index']);
-            }
-        } else
+        } else {
             $this->redirect(['blog/index']);
+        }
 
         if (Yii::$app->request->get('tag'))
             $query->andFilterWhere([
