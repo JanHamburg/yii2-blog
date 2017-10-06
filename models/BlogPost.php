@@ -18,6 +18,7 @@ use yii\helpers\Html;
  * @property integer $id
  * @property integer $catalog_id
  * @property string $title
+ * @property string $brief
  * @property string $content
  * @property string $tags
  * @property string $surname
@@ -32,6 +33,10 @@ use yii\helpers\Html;
  * @property integer $amount
  * @property integer $donated
  * @property integer $in_top
+ * @property integer $special_help
+ * @property string $results
+ * @property string $gratitude
+ * @property integer $closed
  * @property string $slug
  *
  * @property BlogComment[] $blogComments

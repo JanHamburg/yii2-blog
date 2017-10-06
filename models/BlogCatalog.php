@@ -25,6 +25,7 @@ use funson86\blog\Module;
  * @property integer $created_at
  * @property integer $updated_at
  * @property integer $with_likes
+ * @property integer $news_category
  * @property string $slug
  *
  * @property BlogPost[] $blogPosts
