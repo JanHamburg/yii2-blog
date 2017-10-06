@@ -19,7 +19,7 @@ unset($parentCatalog[$model->id]);
 <div class="blog-catalog-form">
 
     <?php $form = ActiveForm::begin([
-        'options'=>['class' => 'form-horizontal', 'enctype'=>'multipart/form-data'],
+        'options' => ['class' => 'form-horizontal', 'enctype' => 'multipart/form-data'],
         'fieldConfig' => [
             'template' => "{label}\n<div class=\"col-lg-3\">{input}</div>\n<div class=\"col-lg-5\">{error}</div>",
             'labelOptions' => ['class' => 'col-lg-2 control-label'],
@@ -45,6 +45,7 @@ unset($parentCatalog[$model->id]);
     <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'with_likes')->checkbox() ?>
+    <?= $form->field($model, 'news_category')->checkbox() ?>
 
     <?= $form->field($model, 'status')->dropDownList(\funson86\blog\models\Status::labels()) ?>
 

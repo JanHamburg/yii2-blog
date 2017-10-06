@@ -12,6 +12,30 @@ use mihaildev\ckeditor\CKEditor;
 /* @var $this yii\web\View */
 /* @var $model backend\modules\blog\models\BlogPost */
 /* @var $form yii\widgets\ActiveForm */
+
+$editorOptions = [
+    'inline' => false,
+    'toolbarGroups' => [
+        ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
+        ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
+        ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker', 'editing']],
+        ['name' => 'forms', 'groups' => ['forms']],
+        '/',
+        ['name' => 'paragraph', 'groups' => ['list', 'indent', 'align', 'blocks', 'bidi', 'paragraph']],
+        '/',
+        ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
+        ['name' => 'styles', 'groups' => ['styles']],
+        ['name' => 'colors', 'groups' => ['colors']],
+        ['name' => 'tools', 'groups' => ['tools']],
+        ['name' => 'others', 'groups' => ['others']],
+        ['name' => 'about', 'groups' => ['about']],
+        ['name' => 'links', 'groups' => ['links']],
+        ['name' => 'insert', 'groups' => ['insert']]
+
+    ],
+    'removeButtons' => 'Save,NewPage,Preview,Print,Templates,Source,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Find,Replace,SelectAll,Scayt,Form,ImageButton,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,Strike,Subscript,Superscript,CopyFormatting,RemoveFormat,CreateDiv,BidiRtl,BidiLtr,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,Iframe,PageBreak,Styles,Format,Font,BGColor,ShowBlocks,About',
+];
+
 ?>
 
 <div class="blog-post-form">
@@ -30,31 +54,7 @@ use mihaildev\ckeditor\CKEditor;
 
     <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'content')->widget(CKEditor::className(), [
-        'editorOptions' => [
-//            'preset' => 'basic',
-            'inline' => false,
-            'toolbarGroups' => [
-                ['name' => 'document', 'groups' => ['mode', 'document', 'doctools']],
-                ['name' => 'clipboard', 'groups' => ['clipboard', 'undo']],
-                ['name' => 'editing', 'groups' => ['find', 'selection', 'spellchecker', 'editing']],
-                ['name' => 'forms', 'groups' => ['forms']],
-                '/',
-                ['name' => 'paragraph', 'groups' => ['list', 'indent', 'align', 'blocks', 'bidi', 'paragraph']],
-                '/',
-                ['name' => 'basicstyles', 'groups' => ['basicstyles', 'cleanup']],
-                ['name' => 'styles', 'groups' => ['styles']],
-                ['name' => 'colors', 'groups' => ['colors']],
-                ['name' => 'tools', 'groups' => ['tools']],
-                ['name' => 'others', 'groups' => ['others']],
-                ['name' => 'about', 'groups' => ['about']],
-                ['name' => 'links', 'groups' => ['links']],
-                ['name' => 'insert', 'groups' => ['insert']]
-
-            ],
-            'removeButtons' => 'Save,NewPage,Preview,Print,Templates,Source,Cut,Copy,Paste,PasteText,PasteFromWord,Undo,Redo,Find,Replace,SelectAll,Scayt,Form,ImageButton,HiddenField,Checkbox,Radio,TextField,Textarea,Select,Button,Strike,Subscript,Superscript,CopyFormatting,RemoveFormat,CreateDiv,BidiRtl,BidiLtr,Language,Anchor,Flash,Table,HorizontalRule,Smiley,SpecialChar,Iframe,PageBreak,Styles,Format,Font,BGColor,ShowBlocks,About',
-        ],
-    ]); ?>
+    <?= $form->field($model, 'content')->widget(CKEditor::className(), ['editorOptions' => $editorOptions,]); ?>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => 128]) ?>
 
@@ -79,6 +79,10 @@ use mihaildev\ckeditor\CKEditor;
     <?= $form->field($model, 'amount')->textInput() ?>
     <?= $form->field($model, 'donated')->textInput(['readonly' => true]) ?>
     <?= $form->field($model, 'in_top')->checkbox() ?>
+    <?= $form->field($model, 'special_help')->checkbox() ?>
+    <?= $form->field($model, 'results')->widget(CKEditor::className(), ['editorOptions' => $editorOptions,]); ?>
+    <?= $form->field($model, 'gratitude')->widget(CKEditor::className(), ['editorOptions' => $editorOptions,]); ?>
+    <?= $form->field($model, 'closed')->checkbox() ?>
 
     <?= $form->field($model, 'status')->dropDownList(\funson86\blog\models\Status::labels()) ?>
 

@@ -81,12 +81,12 @@ class BlogPost extends \yii\db\ActiveRecord
         return [
             [['catalog_id', 'title', 'content', 'tags', 'surname', 'user_id'], 'required'],
             [['catalog_id', 'click', 'user_id', 'status', 'likes', 'amount', 'donated'], 'integer'],
-            [['brief', 'content'], 'string'],
+            [['brief', 'content', 'results', 'gratitude'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['banner'], 'file', 'extensions' => 'jpg, jpeg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['title', 'tags', 'surname'], 'string', 'max' => 128],
-            [['with_donations', 'in_top'], 'integer'],
-            [['with_donations', 'in_top'], 'default', 'value' => 0],
+            [['with_donations', 'in_top', 'closed', 'special_help'], 'integer'],
+            [['with_donations', 'in_top', 'closed', 'special_help'], 'default', 'value' => 0],
         ];
     }
 
@@ -115,6 +115,10 @@ class BlogPost extends \yii\db\ActiveRecord
             'amount' => Module::t('blog', 'Amount Donations'),
             'donated' => Module::t('blog', 'Already Donated'),
             'in_top' => Module::t('blog', 'Pin "Need Help"'),
+            'special_help' => Module::t('blog', 'Pin "Special help"'),
+            'results' => Module::t('blog', 'Results'),
+            'gratitude' => Module::t('blog', 'Gratitude'),
+            'closed' => Module::t('blog', 'Fundraising is closed'),
         ];
     }
 

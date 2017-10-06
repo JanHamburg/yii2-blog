@@ -75,6 +75,8 @@ class BlogCatalog extends \yii\db\ActiveRecord
             [['surname'], 'string', 'max' => 128],
             ['with_likes', 'integer'],
             ['with_likes', 'default', 'value' => 0],
+            ['news_category', 'integer'],
+            ['news_category', 'default', 'value' => 0],
         ];
     }
 
@@ -98,6 +100,7 @@ class BlogCatalog extends \yii\db\ActiveRecord
             'created_at' => Module::t('blog', 'Created At'),
             'updated_at' => Module::t('blog', 'Updated At'),
             'with_likes' => Module::t('blog', 'With Likes'),
+            'news_category' => Module::t('blog', 'News Category'),
         ];
     }
 
