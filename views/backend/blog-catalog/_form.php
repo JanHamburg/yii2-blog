@@ -30,7 +30,7 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
+<!--    --><?//= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
 
     <?= $form->field($model, 'banner')->fileInput() ?>
 
@@ -40,9 +40,9 @@ unset($parentCatalog[$model->id]);
 
     <?= $form->field($model, 'page_size')->textInput() ?>
 
-    <?= $form->field($model, 'template')->textInput(['maxlength' => 255]) ?>
+<!--    --><?//= $form->field($model, 'template')->textInput(['maxlength' => 255]) ?>
 
-    <?= $form->field($model, 'redirect_url')->textInput(['maxlength' => 255]) ?>
+<!--    --><?//= $form->field($model, 'redirect_url')->textInput(['maxlength' => 255]) ?>
 
     <?= $form->field($model, 'with_likes')->checkbox() ?>
     <?= $form->field($model, 'news_category')->checkbox() ?>

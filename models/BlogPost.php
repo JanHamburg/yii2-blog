@@ -84,7 +84,8 @@ class BlogPost extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['catalog_id', 'title', 'content', 'tags', 'surname', 'user_id'], 'required'],
+//            [['catalog_id', 'title', 'content', 'tags', 'surname', 'user_id'], 'required'],
+            [['catalog_id', 'title', 'content', 'user_id'], 'required'],
             [['catalog_id', 'click', 'user_id', 'status', 'likes', 'amount', 'donated'], 'integer'],
             [['brief', 'content', 'results', 'gratitude'], 'string'],
             [['created_at', 'updated_at'], 'safe'],

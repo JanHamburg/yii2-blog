@@ -58,7 +58,7 @@ $editorOptions = [
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => 128]) ?>
 
-    <?= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
+<!--    --><?//= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
 
     <?= $form->field($model, 'banner')->fileInput() ?>
     <?php if (
