@@ -58,6 +58,10 @@ $editorOptions = [
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => 128]) ?>
 
+    <?= $form->field($model, 'author')->textInput() ?>
+    <?= $form->field($model, 'photograph')->textInput() ?>
+    <?= $form->field($model, 'place')->textInput() ?>
+
 <!--    --><?//= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
 
     <?= $form->field($model, 'banner')->fileInput() ?>

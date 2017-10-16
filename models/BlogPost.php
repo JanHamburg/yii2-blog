@@ -87,7 +87,7 @@ class BlogPost extends \yii\db\ActiveRecord
 //            [['catalog_id', 'title', 'content', 'tags', 'surname', 'user_id'], 'required'],
             [['catalog_id', 'title', 'content', 'user_id'], 'required'],
             [['catalog_id', 'click', 'user_id', 'status', 'likes', 'amount', 'donated'], 'integer'],
-            [['brief', 'content', 'results', 'gratitude'], 'string'],
+            [['brief', 'content', 'results', 'gratitude','author','photograph','place'], 'string'],
             [['created_at', 'updated_at'], 'safe'],
             [['banner'], 'file', 'extensions' => 'jpg, jpeg, png', 'mimeTypes' => 'image/jpeg, image/png',],
             [['title', 'tags', 'surname'], 'string', 'max' => 128],
@@ -125,6 +125,9 @@ class BlogPost extends \yii\db\ActiveRecord
             'results' => Module::t('blog', 'Results'),
             'gratitude' => Module::t('blog', 'Gratitude'),
             'closed' => Module::t('blog', 'Fundraising is closed'),
+            'author' => Module::t('blog', 'Author'),
+            'photograph' => Module::t('blog', 'Photograph'),
+            'place' => Module::t('blog', 'Publication Place'),
         ];
     }
 

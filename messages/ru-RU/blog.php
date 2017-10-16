@@ -111,5 +111,8 @@ return [
     'Results' => 'Результаты',
     'Gratitude' => 'Благодарности',
     'Fundraising is closed' => 'Сбор средств закрыт',
+
+    'Photograph'=>'Фотограф',
+    'Publication Place'=>'Место публикации',
 ];
 
