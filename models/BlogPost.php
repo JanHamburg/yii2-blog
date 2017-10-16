@@ -38,6 +38,9 @@ use yii\helpers\Html;
  * @property string $gratitude
  * @property integer $closed
  * @property string $slug
+ * @property string $author
+ * @property string $photograph
+ * @property string $place
  *
  * @property BlogComment[] $blogComments
  * @property BlogCatalog $catalog
