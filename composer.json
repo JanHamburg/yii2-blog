@@ -15,7 +15,7 @@
   ],
   "require": {
     "yiisoft/yii2": "*",
-    "mihaildev/yii2-ckeditor": "*"
+    "mihaildev/yii2-ckeditor": "dev-master"
   },
   "autoload": {
     "psr-4": {
