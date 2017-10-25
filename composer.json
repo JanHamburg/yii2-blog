@@ -13,6 +13,7 @@
       "email": "funson86@gmail.com"
     }
   ],
+  "minimum-stability": "dev",
   "require": {
     "yiisoft/yii2": "*",
     "mihaildev/yii2-ckeditor": "dev-master"
