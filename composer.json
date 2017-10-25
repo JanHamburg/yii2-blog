@@ -16,7 +16,7 @@
   "minimum-stability": "dev",
   "require": {
     "yiisoft/yii2": "*",
-    "mihaildev/yii2-ckeditor": "dev-master"
+    "mihaildev/yii2-ckeditor": "*"
   },
   "autoload": {
     "psr-4": {
@@ -25,11 +25,5 @@
   },
   "extra": {
     "bootstrap": "funson86\\blog\\Bootstrap"
-  },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/DreddyI/yii2-ckeditor"
-    }
-  ]
+  }
 }
