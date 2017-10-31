@@ -16,7 +16,8 @@
   "minimum-stability": "dev",
   "require": {
     "yiisoft/yii2": "*",
-    "mihaildev/yii2-ckeditor": "*"
+    "mihaildev/yii2-ckeditor": "*",
+    "mihaildev/yii2-elfinder": "*"
   },
   "autoload": {
     "psr-4": {

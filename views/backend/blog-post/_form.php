@@ -8,6 +8,7 @@ use yii\helpers\ArrayHelper;
 use funson86\blog\models\BlogCatalog;
 use kartik\markdown\MarkdownEditor;
 use mihaildev\ckeditor\CKEditor;
+use mihaildev\elfinder\ElFinder;
 
 /* @var $this yii\web\View */
 /* @var $model backend\modules\blog\models\BlogPost */
@@ -54,7 +55,11 @@ $editorOptions = [
 
     <?= $form->field($model, 'brief')->textarea(['rows' => 6]) ?>
 
-    <?= $form->field($model, 'content')->widget(CKEditor::className(), ['editorOptions' => $editorOptions,]); ?>
+    <?= $form->field($model, 'content')->widget(
+        CKEditor::className(), [
+            'editorOptions' => ElFinder::ckeditorOptions('elfinder', $editorOptions),
+        ]
+    ); ?>
 
     <?= $form->field($model, 'tags')->textInput(['maxlength' => 128]) ?>
 
@@ -62,7 +67,7 @@ $editorOptions = [
     <?= $form->field($model, 'photograph')->textInput() ?>
     <?= $form->field($model, 'place')->textInput() ?>
 
-<!--    --><?//= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
+    <!--    --><? //= $form->field($model, 'surname')->textInput(['maxlength' => 128]) ?>
 
     <?= $form->field($model, 'banner')->fileInput() ?>
     <?php if (
@@ -84,8 +89,16 @@ $editorOptions = [
     <?= $form->field($model, 'donated')->textInput(['readonly' => true]) ?>
     <?= $form->field($model, 'in_top')->checkbox() ?>
     <?= $form->field($model, 'special_help')->checkbox() ?>
-    <?= $form->field($model, 'results')->widget(CKEditor::className(), ['editorOptions' => $editorOptions,]); ?>
-    <?= $form->field($model, 'gratitude')->widget(CKEditor::className(), ['editorOptions' => $editorOptions,]); ?>
+    <?= $form->field($model, 'results')->widget(
+        CKEditor::className(), [
+            'editorOptions' => ElFinder::ckeditorOptions('elfinder', $editorOptions),
+        ]
+    ); ?>
+    <?= $form->field($model, 'gratitude')->widget(
+        CKEditor::className(), [
+            'editorOptions' => ElFinder::ckeditorOptions('elfinder', $editorOptions),
+        ]
+    ); ?>
     <?= $form->field($model, 'closed')->checkbox() ?>
 
     <?= $form->field($model, 'status')->dropDownList(\funson86\blog\models\Status::labels()) ?>
