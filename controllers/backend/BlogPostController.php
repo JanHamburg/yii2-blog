@@ -92,6 +92,7 @@ class BlogPostController extends Controller
                     $model->banner->saveAs(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $bannerName);
                     $model->banner = $bannerName;
                 }
+                $model->amount *= 100;
                 $model->save(false);
 
                 return $this->redirect(['view', 'id' => $model->id]);
@@ -119,6 +120,7 @@ class BlogPostController extends Controller
 
         $model = $this->findModel($id);
         $oldBanner = $model->banner;
+        $model->amount = $model->amount / 100;
 
         if ($model->load(Yii::$app->request->post())) {
             $model->banner = UploadedFile::getInstance($model, 'banner');
@@ -127,10 +129,10 @@ class BlogPostController extends Controller
                     $bannerName = Yii::$app->params['blogUploadPath'] . date('Ymdhis') . rand(1000, 9999) . '.' . $model->banner->extension;
                     $model->banner->saveAs(Yii::getAlias('@frontend/web') . DIRECTORY_SEPARATOR . $bannerName);
                     $model->banner = $bannerName;
-                    $model->amount = $model->amount*100;
                 } else {
                     $model->banner = $oldBanner;
                 }
+                $model->amount = $model->amount * 100;
                 $model->save(false);
                 return $this->redirect(['view', 'id' => $model->id]);
             } else {
