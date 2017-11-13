@@ -86,7 +86,7 @@ $editorOptions = [
     <?= $form->field($model, 'likes')->textInput(['readonly' => true]) ?>
     <?= $form->field($model, 'with_donations')->checkbox() ?>
     <?= $form->field($model, 'amount')->textInput() ?>
-    <?= $form->field($model, 'donated')->textInput(['readonly' => true]) ?>
+    <?= $form->field($model, 'donated')->textInput() ?>
     <?= $form->field($model, 'in_top')->checkbox() ?>
     <?= $form->field($model, 'special_help')->checkbox() ?>
     <?= $form->field($model, 'results')->widget(
