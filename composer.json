@@ -1,5 +1,5 @@
 {
-  "name": "funson86/yii2-blog",
+  "name": "JanHamburg/yii2-blog",
   "description": "Yii2 Blog for other application",
   "type": "yii2-extension",
   "keywords": [
@@ -9,7 +9,7 @@
   "license": "Apache-2.0",
   "authors": [
     {
-      "name": "Funson Lee",
+      "name": "Jan",
       "email": "funson86@gmail.com"
     }
   ],
@@ -25,6 +25,6 @@
     }
   },
   "extra": {
-    "bootstrap": "funson86\\blog\\Bootstrap"
+    "bootstrap": "JanHamburg\\blog\\Bootstrap"
   }
 }
